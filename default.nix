@@ -12,7 +12,7 @@ pkgs.buildGoModule rec {
 
   # Metadata for the package.
   meta = {
-    description = "A simple URL shortener written in Go";
+    description = "Synchronize GitHub repositories locally";
     homepage = "https://github.com/aevox/hubsync";
     license = pkgs.lib.licenses.mit;
   };
