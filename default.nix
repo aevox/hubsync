@@ -1,5 +1,4 @@
-{ pkgs ? import <nixpkgs> {} }:
-
+{pkgs ? import <nixpkgs> {}}:
 pkgs.buildGoModule {
   pname = "hubsync";
   version = "0.0.0";
