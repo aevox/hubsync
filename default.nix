@@ -8,7 +8,7 @@ pkgs.buildGoModule {
   src = ./.;
 
   # Enable vendoring support.
-  vendorHash = "sha256-gPcmc6LeYJjd+SdaT10sX+03uCd5bv59rzzN1WwIZLM=";
+  vendorHash = "sha256-+GzzgPfomOZ6EJaeeirBI94sBY8eMu8gsVd/ehIWzLE=";
 
   # Metadata for the package.
   meta = {
