@@ -1,5 +1,5 @@
 {
-  description = "A flake using toolkit and its nixpkgs";
+  description = "HubSync Flake - Synchronize GitHub repositories locally";
 
   inputs = {
     # We get nixpkgs from nix-toolkit.
@@ -10,6 +10,7 @@
   };
 
   outputs = {
+    self,
     nixpkgs,
     flake-utils,
     ...
@@ -32,6 +33,7 @@
             pkgs.go
           ];
           buildInputs = [
+            self.packages.${system}.default
             pkgs.git
           ];
         };
