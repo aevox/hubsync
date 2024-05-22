@@ -10,7 +10,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/google/go-github/v61/github"
+	"github.com/google/go-github/v62/github"
 	"golang.org/x/oauth2"
 )
 
@@ -46,6 +46,7 @@ func main() {
 	userPtr := flag.String("user", "", "The GitHub user name.")
 	dirPtr := flag.String("dir", ".", "The directory to clone the repositories into.")
 	privatePtr := flag.Bool("private", false, "Fetch all repositories, including private ones.")
+	archivedPtr := flag.Bool("archived", false, "Include archived repositories.")
 	flag.Parse()
 
 	if *orgPtr == "" && *userPtr == "" {
@@ -84,21 +85,29 @@ func main() {
 				fmt.Println("Error fetching repositories:", err)
 				os.Exit(1)
 			}
-			allRepos = append(allRepos, repos...)
+			for _, repo := range repos {
+				if *archivedPtr || !repo.GetArchived() {
+					allRepos = append(allRepos, repo)
+				}
+			}
 			if resp.NextPage == 0 {
 				break
 			}
 			opt.Page = resp.NextPage
 		}
 	} else {
-		opt := &github.RepositoryListOptions{Type: repoType, ListOptions: github.ListOptions{PerPage: 100}}
+		opt := &github.RepositoryListByUserOptions{Type: repoType, ListOptions: github.ListOptions{PerPage: 100}}
 		for {
-			repos, resp, err := client.Repositories.List(ctx, entity, opt)
+			repos, resp, err := client.Repositories.ListByUser(ctx, entity, opt)
 			if err != nil {
 				fmt.Println("Error fetching repositories:", err)
 				os.Exit(1)
 			}
-			allRepos = append(allRepos, repos...)
+			for _, repo := range repos {
+				if *archivedPtr || !repo.GetArchived() {
+					allRepos = append(allRepos, repo)
+				}
+			}
 			if resp.NextPage == 0 {
 				break
 			}
