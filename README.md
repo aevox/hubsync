@@ -22,7 +22,7 @@ GITHUB_TOKEN=xxxxxxxx  hubsync --user=username --dir=target_directory --private
 - `--org`: Specifies a GitHub organization from which to fetch repositories.
 - `--dir`: Sets the target directory for cloned or updated repositories. Defaults to the current directory if not specified.
 - `--private`: Includes private repositories in the fetch operation.
-
+- `--archived`: Includes archived repositories in the fetch operation.
 
 ## Prerequisites
 
