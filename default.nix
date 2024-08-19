@@ -1,13 +1,13 @@
 {pkgs ? import <nixpkgs> {}}:
 pkgs.buildGoModule {
   pname = "hubsync";
-  version = "0.0.2";
+  version = "0.0.3";
 
   # Specify the source directory.
   src = ./.;
 
   # Enable vendoring support.
-  vendorHash = "sha256-BzJ4byFlYLKVgjcUIFXtYXG/CCBeZ5CUyKvIth6tKrw=";
+  vendorHash = "sha256-L1PCY4yGnOkcX82/hapkBPn7weQweThyh+D3PQSWUAY=";
 
   # Metadata for the package.
   meta = {
