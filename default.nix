@@ -1,7 +1,7 @@
 {pkgs ? import <nixpkgs> {}}:
 pkgs.buildGoModule rec {
   pname = "hubsync";
-  version = "0.0.3";
+  version = "0.0.4";
 
   # Specify the source directory.
   src = ./.;
