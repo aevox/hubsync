@@ -14,6 +14,8 @@ import (
 	"golang.org/x/oauth2"
 )
 
+var versionString = "dev"
+
 func syncRepo(wg *sync.WaitGroup, repo *github.Repository, directory string, semaphore chan struct{}) {
 	defer wg.Done()
 
@@ -42,12 +44,18 @@ func syncRepo(wg *sync.WaitGroup, repo *github.Repository, directory string, sem
 }
 
 func main() {
+	versionPtr := flag.Bool("version", false, "Print the version and exit.")
 	orgPtr := flag.String("org", "", "The name of the GitHub organization.")
 	userPtr := flag.String("user", "", "The GitHub user name.")
 	dirPtr := flag.String("dir", ".", "The directory to clone the repositories into.")
 	privatePtr := flag.Bool("private", false, "Fetch all repositories, including private ones.")
 	archivedPtr := flag.Bool("archived", false, "Include archived repositories.")
 	flag.Parse()
+
+	if *versionPtr {
+		fmt.Println("Version:", versionString)
+		os.Exit(0)
+	}
 
 	if *orgPtr == "" && *userPtr == "" {
 		fmt.Println("You must specify either --org or --user.")
