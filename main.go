@@ -18,27 +18,27 @@ func syncRepo(wg *sync.WaitGroup, repo *github.Repository, directory string, sem
 	defer wg.Done()
 
 	semaphore <- struct{}{}
+	defer func() { <-semaphore }() // Release the semaphore when done
+
 	clonePath := filepath.Join(directory, *repo.Name)
 
+	var cmd *exec.Cmd
 	if _, err := os.Stat(clonePath); os.IsNotExist(err) {
-		cmd := exec.Command("git", "clone", repo.GetSSHURL(), clonePath)
-		err := cmd.Run()
-		if err != nil {
-			fmt.Printf("Error cloning repository %s: %v\n", *repo.Name, err)
-		} else {
-			fmt.Printf("Successfully cloned %s into %s\n", *repo.Name, clonePath)
-		}
+		cmd = exec.Command("git", "clone", repo.GetSSHURL(), clonePath)
+		fmt.Printf("Cloning %s into %s...\n", *repo.Name, clonePath)
 	} else {
-		cmd := exec.Command("git", "-C", clonePath, "pull")
-		err := cmd.Run()
-		if err != nil {
-			fmt.Printf("Error updating repository %s: %v\n", *repo.Name, err)
-		} else {
-			fmt.Printf("Successfully updated %s\n", *repo.Name)
-		}
+		cmd = exec.Command("git", "-C", clonePath, "pull")
+		fmt.Printf("Pulling latest changes for %s in %s...\n", *repo.Name, clonePath)
 	}
 
-	<-semaphore
+	// Capture output
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	// Run the command and check for errors
+	if err := cmd.Run(); err != nil {
+		fmt.Printf("Error executing command for repository %s: %v\n", *repo.Name, err)
+	}
 }
 
 func main() {
@@ -116,7 +116,7 @@ func main() {
 	}
 
 	var wg sync.WaitGroup
-	semaphore := make(chan struct{}, 10)
+	semaphore := make(chan struct{}, 10) // Adjust the number for desired parallelism
 
 	for _, repo := range allRepos {
 		wg.Add(1)
