@@ -1,10 +1,11 @@
 module hubsync
 
-go 1.21.5
+go 1.23.0
+
 toolchain go1.23.7
 
 require (
-	github.com/google/go-github/v63 v63.0.0
+	github.com/google/go-github/v69 v69.2.0
 	golang.org/x/oauth2 v0.28.0
 )
 
