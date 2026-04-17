@@ -32,39 +32,21 @@ GITHUB_TOKEN=xxxxxxxx  hubsync --user=username --dir=target_directory --private
 
 - **Nix (optional)**: Nix can be used to build the binary.
 
-## Setup and Installation
+## Build:
 
-Clone or download the hubsync script to your local machine.
-You can build the binary either with Nix or directly with Golang.
-
-### Nix:
-
-Install [Nix](https://nixos.org/download/):
-
-On Linux:
-```bash
-sh <(curl -L https://nixos.org/nix/install) --daemon
-```
-
-On MacOS:
-```bash
-sh <(curl -L https://nixos.org/nix/install)
-```
-
-Create a shell environment ( It installs golang, builds and exposes the binary )
-
-```bash
-nix-shell
-```
-
-### Go:
-
-Install [Go](https://go.dev/doc/install) > 1.21.5:
 
 ```bash
 go build
 ```
 
-## License
+## Install:
+### With Go
 
-hubsync is made available under the MIT License.
+```
+go install github.com/aevox/hubsync@latest
+```
+
+### With Nix
+```
+nix profile add github.com/aevox:hubsync
+```
