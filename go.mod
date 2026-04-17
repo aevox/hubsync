@@ -1,4 +1,4 @@
-module hubsync
+module github.com/aevox/hubsync
 
 go 1.25.0
 
