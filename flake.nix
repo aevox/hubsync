@@ -2,10 +2,8 @@
   description = "HubSync Flake - Synchronize GitHub repositories locally";
 
   inputs = {
-    # We get nixpkgs from nix-toolkit.
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
-    # This is a nice to have lib to manage different systems.
     flake-utils.url = "github:numtide/flake-utils";
   };
 
