@@ -7,7 +7,7 @@ pkgs.buildGoModule rec {
   src = ./.;
 
   # Enable vendoring support.
-  vendorHash = "sha256-I71f2z/oHc2oLsFVbZBogXFq9oC1V48r0PWyKLXLwUE=";
+  vendorHash = "sha256-3eyLL+o+5TJ7IYKI8mIG8Vfppk1Bgd0qg4dBPqi2eCA=";
 
   ldflags = [
     "-X main.versionString=v${version}"

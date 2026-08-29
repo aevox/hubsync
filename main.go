@@ -10,7 +10,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/google/go-github/v84/github"
+	"github.com/google/go-github/v90/github"
 	"golang.org/x/oauth2"
 )
 
@@ -81,7 +81,11 @@ func main() {
 	)
 	tc := oauth2.NewClient(ctx, ts)
 
-	client := github.NewClient(tc)
+	client, err := github.NewClient(github.WithHTTPClient(tc))
+	if err != nil {
+		fmt.Println("Error creating GitHub client:", err)
+		os.Exit(1)
+	}
 
 	var allRepos []*github.Repository
 
